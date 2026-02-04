@@ -1,0 +1,11 @@
+[project]
+name = "aigcore"
+version = "0.0.1"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = ["python-dotenv"]
+
+[tool.setuptools.packages.find]
+include = ["aigcore*"]  # 只包含 aigcore 开头的包
+exclude = ["examples*", "runs*"] # 排除干扰项

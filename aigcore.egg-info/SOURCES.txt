@@ -1,0 +1,9 @@
+README.md
+pyproject.toml
+aigcore/__init__.py
+aigcore/logger.py
+aigcore.egg-info/PKG-INFO
+aigcore.egg-info/SOURCES.txt
+aigcore.egg-info/dependency_links.txt
+aigcore.egg-info/requires.txt
+aigcore.egg-info/top_level.txt
