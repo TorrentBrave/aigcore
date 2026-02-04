@@ -1,5 +1,5 @@
 [project]
-name = "aigcore"
+name = "aigc-core"
 version = "0.0.1"
 description = "Add your description here"
 readme = "README.md"
