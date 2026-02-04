@@ -1,1 +1,6 @@
 python-dotenv
+datasets>=4.5.0
+peft>=0.18.1
+pip>=25.3
+swanlab>=0.7.6
+torch>=2.10.0
