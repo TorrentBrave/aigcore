@@ -14,3 +14,17 @@ dependencies = ["python-dotenv",
 [tool.setuptools.packages.find]
 include = ["aigco*"]  # 只包含 aigco 开头的包
 exclude = ["examples*", "runs*"] # 排除干扰项
+
+[tool.pixi.workspace]
+channels = ["conda-forge"]
+platforms = ["linux-64"]
+
+[tool.pixi.pypi-dependencies]
+aigco = { path = ".", editable = true }
+
+[tool.pixi.tasks]
+check-gpu = "python -c \"import torch; print(f'CUDA available: {torch.cuda.is_available()}'); print(f'PyTorch version: {torch.__version__}'); print(f'CUDA version: {torch.version.cuda if torch.cuda.is_available() else None}')\""
+
+
+[pypi-options]
+index-url = "https://pypi.tuna.tsinghua.edu.cn/simple"

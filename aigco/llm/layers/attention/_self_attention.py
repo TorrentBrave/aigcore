@@ -13,7 +13,7 @@ import torch.nn.functional as F
 
 class SelfAttention(nn.Module):
     def __init__(self, d, d_k, d_q, d_v):
-        super(SelfAttention, self).__init__
+        super(SelfAttention, self).__init__()
         self.d = d
         self.d_k = d_k
         self.d_q = d_q
