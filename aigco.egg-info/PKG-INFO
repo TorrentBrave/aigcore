@@ -5,11 +5,12 @@ Summary: Omni LLM and Agent
 Requires-Python: >=3.12
 Description-Content-Type: text/markdown
 Requires-Dist: python-dotenv
-Requires-Dist: datasets>=4.5.0
-Requires-Dist: peft>=0.18.1
-Requires-Dist: pip>=25.3
-Requires-Dist: swanlab>=0.7.6
-Requires-Dist: torch>=2.10.0
+Requires-Dist: datasets>=2.18.0
+Requires-Dist: peft>=0.7.1
+Requires-Dist: pip>=24.0
+Requires-Dist: swanlab>=0.3.0
+Requires-Dist: torch>=2.4.0
+Requires-Dist: flash-attn
 
 better aigc lib
 

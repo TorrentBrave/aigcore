@@ -4,27 +4,20 @@ version = "0.0.2"
 description = "Omni LLM and Agent"
 readme = "README.md"
 requires-python = ">=3.12"
-dependencies = ["python-dotenv",
-                "datasets>=4.5.0",
-                "peft>=0.18.1",
-                "pip>=25.3",
-                "swanlab>=0.7.6",
-                "torch>=2.10.0"]
+dependencies = [
+    "python-dotenv",
+    "datasets>=2.18.0",
+    "peft>=0.7.1",
+    "pip>=24.0",
+    "swanlab>=0.3.0",
+    "torch>=2.4.0",
+    "flash-attn",
+]
 
 [tool.setuptools.packages.find]
-include = ["aigco*"]  # 只包含 aigco 开头的包
-exclude = ["examples*", "runs*"] # 排除干扰项
-
-[tool.pixi.workspace]
-channels = ["conda-forge"]
-platforms = ["linux-64"]
-
-[tool.pixi.pypi-dependencies]
-aigco = { path = ".", editable = true }
-
-[tool.pixi.tasks]
-check-gpu = "python -c \"import torch; print(f'CUDA available: {torch.cuda.is_available()}'); print(f'PyTorch version: {torch.__version__}'); print(f'CUDA version: {torch.version.cuda if torch.cuda.is_available() else None}')\""
-
+where = ["."]
+include = ["aigco*"]
+exclude = ["examples*", "runs*"]
 
 [pypi-options]
 index-url = "https://pypi.tuna.tsinghua.edu.cn/simple"
