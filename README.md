@@ -3,6 +3,10 @@
     src="docs/aigco_logo.png"
     alt="aigco Logo"
     width="200"
+    style="
+        border-radius: 20px;
+        box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+    "
   />
 </p>
 
@@ -60,7 +64,7 @@ uv sync
 
 ## Example
 
-### Inference Qwen3-0.6B like vllm
+### Parallel Inference Qwen3-0.6B like vllm
 
 ```python
 import time
