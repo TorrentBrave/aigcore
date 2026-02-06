@@ -38,3 +38,6 @@ index-url = "https://pypi.tuna.tsinghua.edu.cn/simple"
 # flash-dev: https://flashattn.dev/
 # pytroch: https://pytorch.org/get-started/locally/
 # chat: https://gemini.google.com/app/f8f8ce685d2aae2c
+
+# to use examples 
+# uv pip install -e.

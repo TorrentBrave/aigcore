@@ -2,7 +2,7 @@ Metadata-Version: 2.4
 Name: aigco
 Version: 0.0.3
 Summary: Omni LLM, Agent and inference
-Requires-Python: >=3.12
+Requires-Python: <3.13,>=3.12
 Description-Content-Type: text/markdown
 Requires-Dist: python-dotenv
 Requires-Dist: datasets>=2.18.0
@@ -12,6 +12,7 @@ Requires-Dist: swanlab>=0.3.0
 Requires-Dist: torch==2.10.0
 Requires-Dist: torchvision
 Requires-Dist: flash-attn @ https://github.com/mjun0812/flash-attention-prebuild-wheels/releases/download/v0.7.16/flash_attn-2.8.3%2Bcu130torch2.10-cp312-cp312-linux_x86_64.whl
+Requires-Dist: transformers>=5.1.0
 
 better aigc lib
 
