@@ -1,3 +1,13 @@
+<p align="center">
+  <img
+    src="docs/aigco_logo.png"
+    alt="aigco Logo"
+    width="200"
+  />
+</p>
+
+<span align="center">
+
 ## Quick Start
 
 ### Installation
@@ -43,11 +53,8 @@ mkdir src && git -C src clone https://github.com/TorrentBrave/aigco.git
 git submodule add --force https://github.com/TorrentBrave/aigco.git src/aigco
 
 uv add --editable ./src/aigco/ <!-- will update aigco.egg.info -->
-
 cd src/aigco
-
 uv lock
-
 uv sync
 ```
 
@@ -56,51 +63,79 @@ uv sync
 ### Inference Qwen3-0.6B like vllm
 
 ```python
+import time
 import aigco
-from transformers import AutoTokenizer
+from random import randint, seed
+from aigco.inference import LLM, SamplingParams
 from huggingface_hub import snapshot_download
-from dotenv import load_dotenv
 
-load_dotenv()
 REPO_ID = "Qwen/Qwen3-0.6B"
 
-logger = aigco.logger(name="qwen3_inference")
+logger = aigco.logger(name="qwen3_benchmark")
+
 
 def main():
+    seed(0)
+    num_seqs = 256
+    max_input_len = 1024
+    max_output_len = 1024
+
     try:
         model_path = snapshot_download(repo_id=REPO_ID, local_files_only=True)
-        logger.info(f"📍 Find model path: {model_path}")
+        logger.info(f"📍 Finded model path: {model_path}")
     except Exception as e:
-        logger.error(f"❌ Can't find model in cache {REPO_ID}, Reason: {e}")
+        logger.error(f"❌ Can't fine model in cache: {e}")
         return
 
-    tokenizer = AutoTokenizer.from_pretrained(model_path)
-
     logger.info("Starting init LLM Engine...")
-    llm = aigco.inference.LLM(model_path, enforce_eager=True, tensor_parallel_size=1)
+    llm = LLM(model_path, enforce_eager=False, max_model_len=4096)
 
-    sampling_params = aigco.inference.SamplingParams(temperature=0.6, max_tokens=256)
-    prompts_text = ["introduce yourself", "list all prime numbers within 100"]
-
-    prompts = [
-        tokenizer.apply_chat_template(
-            [{"role": "user", "content": prompt}],
-            tokenize=False,
-            add_generation_prompt=True,
-        )
-        for prompt in prompts_text
+    prompt_token_ids = [
+        [randint(0, 10000) for _ in range(randint(100, max_input_len))]
+        for _ in range(num_seqs)
     ]
 
-    logger.info(f"Generating reponse, The number of samples: {len(prompts)}...")
-    outputs = llm.generate(prompts, sampling_params)
+    sampling_params = [
+        SamplingParams(
+            temperature=0.6, ignore_eos=True, max_tokens=randint(100, max_output_len)
+        )
+        for _ in range(num_seqs)
+    ]
 
-    for prompt, output in zip(prompts, outputs):
-        log_message = f"\nPrompt: {prompt!r}\nCompletion: {output['text']!r}"
-        logger.info(log_message)
+    logger.info("🚀 Warmuping...")
+    llm.generate(["Warmup"], SamplingParams(max_tokens=10))
 
-    logger.info("Finished Inference Task")
+    logger.info(f"🔥 Start test {num_seqs} random sequence...")
+    start_time = time.time()
+
+    llm.generate(prompt_token_ids, sampling_params, use_tqdm=True)
+
+    total_time = time.time() - start_time
+
+    total_gen_tokens = sum(sp.max_tokens for sp in sampling_params)
+    throughput = total_gen_tokens / total_time
+
+    result_msg = (
+        f"\n{'=' * 30}\n"
+        f"✅ Benchmark Result:\n"
+        f"Total Generated Tokens: {total_gen_tokens} tok\n"
+        f"Total Time: {total_time:.2f} s\n"
+        f"Throughput: {throughput:.2f} tok/s\n"
+        f"{'=' * 30}"
+    )
+
+    logger.info(result_msg)
+
 
 if __name__ == "__main__":
     main()
 ```
 
+```md
+==============================
+✅ Benchmark Result:
+Total Generated Tokens: 133966 tok
+Total Time: 101.90 s
+Throughput: 1314.70 tok/s
+==============================
+```
