@@ -16,3 +16,5 @@ uv sync
 
 ## From PypI
 uv pip install aigco[flash_attn]
+or add to deependencies
+"flash-attn @ https://github.com/mjun0812/flash-attention-prebuild-wheels/releases/download/v0.7.16/flash_attn-2.8.3%2Bcu130torch2.10-cp312-cp312-linux_x86_64.whl"
