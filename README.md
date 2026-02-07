@@ -17,7 +17,7 @@
 #### From PyPI
 
 ```bash
-pip install aigco[flash_attn]
+pip install aigco
 ```
 
 or

@@ -4,3 +4,4 @@
 .env
 examples/logs
 aigco.egg-info
+data

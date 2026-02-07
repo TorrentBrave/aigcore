@@ -9,8 +9,7 @@ from transformers import PreTrainedModel, GenerationMixin, PretrainedConfig
 from transformers.modeling_outputs import CausalLMOutputWithPast
 from transformers import PretrainedConfig
 
-
-from ..norm import RMSNorm, LayerNorm
+from aigco.llm.layers import RMSNorm, LayerNorm
 
 
 class MiniMindConfig(PretrainedConfig):
